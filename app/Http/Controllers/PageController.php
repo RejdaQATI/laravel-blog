@@ -1,6 +1,4 @@
 <?php
-
-
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
@@ -43,7 +41,6 @@ class PageController extends Controller
     {
         $posts = Post::latest()->paginate(5); 
         return view('welcome', ['posts' => $posts]); 
-    }
-    
-
+    }    
 }
+

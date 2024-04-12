@@ -26,7 +26,11 @@ class PostController extends Controller
             'content' => 'required',
             'description' => 'required',
         ]);
-        Auth::user()->posts()->create($request->all());
+        $user = Auth::user();
+        $post = new Post();
+        $post->fill($request->all());
+        $user->posts()->save($post);
+
         return redirect()->route('posts.index')->with('success', 'Post created successfully.');
     }
 
