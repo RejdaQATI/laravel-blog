@@ -19,6 +19,8 @@ class PostFactory extends Factory
         public function definition(): array
         {
             return [
+                
+                    'user_id' => User::all()->random()->id,
                     'title' => fake()->sentence(),
                     'content' => fake()->paragraph(),
                     'description' => fake()->paragraph(),

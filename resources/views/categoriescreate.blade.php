@@ -13,7 +13,7 @@
             <form action="{{ route('categories.store') }}" method="post">
                 @csrf
                 <div class="form-group">
-                <label for="title">Title</label>
+                <label for="title">Créer une categorie</label>
                 <input type="text" class="form-control" id="title" name="title" required>
                 </div>
                 <br>

@@ -19,6 +19,15 @@ integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6
       </div>
     </div>
   </nav>
+
+  <form action="{{ route('posts.index') }}" method="GET" id="categoryFilter">
+    @foreach($categories as $category)
+        <div>
+            <input type="checkbox" name="categories[]" value="{{ $category->id }}">
+            <label>{{ $category->title }}</label>
+        </div>
+    @endforeach
+    <button type="submit">Filtrer</button>
   <div class="container mt-5">
     <div class="row">
       @foreach ($posts as $post)
@@ -33,6 +42,11 @@ integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6
             <div class="card-body">
                 <p class="card-text">{{ $post->description }}</p>
               </div>
+              @foreach($post->categories as $category)
+              <div class="card-body">
+                <p class="card-text">{{ $category->title  }}</p>
+              </div>
+              @endforeach
               <div> <p>Auteur : {{ $post->author->name }}</p> </div>
             <div class="card-footer">
               <div class="row">
@@ -41,20 +55,23 @@ integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6
 
             class="btn btn-primary btn-sm">Edit</a>
                 </div>
-                {{-- <div class="col-sm">
+                <div class="col-sm">
                     <form action="{{ route('posts.destroy', $post->id) }}" method="post">
                       @csrf
                       @method('DELETE')
                       <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                     </form>
-                </div> --}}
+
+                    
+                  </form>
+                </form>
+                  
+                </div>
               </div>
             </div>
           </div>
         </div>
       @endforeach
-    </div>
-  </div>
 </body>
 </html>
 

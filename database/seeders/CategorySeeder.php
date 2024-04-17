@@ -18,6 +18,4 @@ class CategorySeeder extends Seeder
             'title' => 'Blabla',
         ]);
     }
-
-
 }

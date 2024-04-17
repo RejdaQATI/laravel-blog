@@ -16,6 +16,15 @@
             <label for="body">Body</label>
             <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
           </div>
+          @if($errors->any())
+          {{ implode('', $errors->all('Veuillez remplir cette case')) }}
+          @endif
+          @foreach ($categories as $category) 
+            <div> 
+            <input type="checkbox" name="categories[]" value="{{ $category->id }}">
+             <label>{{ $category->title }}</label>
+             </div> 
+            @endforeach
           <br>
           <button type="submit" class="btn btn-primary">Create Post</button>
         </form>

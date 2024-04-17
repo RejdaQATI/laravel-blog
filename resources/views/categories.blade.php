@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Categories</title>
 </head>
+
 <body>
     <h1>Categories</h1>
 
@@ -32,7 +33,7 @@
                         <form action="{{ route('categories.destroy', $category->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="submit">Delete</button> 
+                            <button type="submit">Delete</button>
                         </form>
                     </td>
                 </tr>

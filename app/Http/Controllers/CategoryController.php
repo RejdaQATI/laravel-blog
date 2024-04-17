@@ -17,6 +17,7 @@ class CategoryController extends Controller
     {
         $categories = Category::all();
         return view('categories', compact('categories'));
+
     }
 
     public function create()
@@ -72,5 +73,6 @@ class CategoryController extends Controller
             ->with('success', 'Category deleted successfully');
     }
 }
+
 
 
