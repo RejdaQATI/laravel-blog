@@ -28,24 +28,29 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required',
-            
+
+        $validatedData = $request->validate([
+            'title' => 'required|string',
+            'description' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', 
         ]);
 
-        Category::create($request->all());
-        
-        return redirect()->route('categories.index')->with('success','Category created successfully');
-    }
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->extension();
+            $image->move(public_path('images'), $imageName);
 
-    // public function show(Category $category)
-    // {
-    //     return view('categories.show', compact('category'));
-    // }
+            $validatedData['image'] = '/images/' . $imageName;
+        }
 
 
+        $category = Category::create($validatedData);
+        return redirect()->route('categories.index')
+        ->with('success', 'Category updated successfully.');
     
 
+
+    }
     public function edit($id)
     {
         $category = Category::find($id);

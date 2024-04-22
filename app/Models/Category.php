@@ -10,6 +10,8 @@ class Category extends Model
     use HasFactory;
     protected $fillable = [
         'title',
+        'image',
+        'description',
     ];
 
 
@@ -17,6 +19,8 @@ class Category extends Model
         {
             return $this->belongsToMany(Post::class);
         }
+
+        
     }
     
 

@@ -10,47 +10,47 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use App\Models\Post;
 use App\Models\Category;
+use App\Models\User;
 
 class PostController extends Controller
 {
     
-
     public function index(Request $request): View
-{
-    $categories = Category::all(); 
-    $categoryIds = $request->categories; 
-    $posts = Post::whereHas('categories', function ($query) use ($categoryIds) {
-        if (!empty($categoryIds)) { 
-            $query->whereIn('categories.id', $categoryIds); 
+    {
+        if (Auth::user()->isAdmin()) {
+            $posts = Post::all();
+        } else {
+            $user = User::find(Auth::id());
+            $posts = $user->posts()->get();
         }
-    })->get();
-    return view('allposts', compact('posts', 'categories'));
-}
-
-
-
-
-public function store(Request $request)
-{
-
-    $request->validate([
-        'title' => 'required|max:255',
-        'content' => 'required',
-        'description' => 'required',
-        // 'categories' => '',
-    ]);
-
-    $user = Auth::user();
-    $post = new Post();
-    $post->fill($request->all());
-    $user->posts()->save($post);
-    $categories = $request->categories; 
-
-    $post->categories()->attach($categories);
+    
+        return view('allposts', compact('posts'));
+    }
+    
     
 
-    return redirect()->route('posts.index')->with('success', 'Post created successfully.');
-}
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|max:255',
+            'content' => 'required',
+            'description' => 'required',
+        
+        ]);
+
+        $user = Auth::user();
+        $post = new Post();
+        $post->fill($request->all());
+    
+    
+        $user->posts()->save($post);
+        $categories = $request->categories; 
+        $post->categories()->attach($categories);
+        $this->StoreImage($post);
+        return redirect()->route('posts.index')->with('success', 'Post created successfully.');
+    }
+    
 
 
     public function update(Request $request, $id)
@@ -59,10 +59,13 @@ public function store(Request $request)
             'title' => 'required|max:255',
             'content' => 'required',
             'description' => 'required',
+            'categories' => 'required',
         ]);
+        $categories = Category::all(); 
 
         $post = Post::find($id);
         $post->update($request->all());
+        $this->storeImage($post);
 
         return redirect()->route('posts.index')->with('success', 'Post updated successfully.');
     }
@@ -77,11 +80,21 @@ public function store(Request $request)
     }
 
     public function edit($id)
-    {
+    {   
+        
         $post = Post::find($id);
-        return view('edit', compact('post'));
+        $categories = Category::all();
+        return view('edit', [
+            'categories'=>$categories,
+            'post'=>$post,
+    
+            ]);
     }
-
+    public function show(Post $post)
+    {
+        return view('show', compact('post'));
+    }
+    
 
 
     public function destroy($id)
@@ -93,7 +106,16 @@ public function store(Request $request)
 }
 
 
-
-
+private function storeImage(Post $post)
+{
+    if (request()->hasFile('image')) {
+        $imagePath = request('image')->store('images', 'public');
+        $post->image = $imagePath;
+        $post->save();
+    }
 }
+ 
+}
+
+
 

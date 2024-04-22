@@ -18,7 +18,9 @@ class CategoryFactory extends Factory
     {
         return [
 
-            'title' => fake()->sentence(),
+            'title' => fake()->word(),
+            'description' => fake()->sentence(),
+            'image' => fake()->randomelement(['storage/images/logo1.png','storage/images/logo2.png','storage/images/logo2.png']),
         ];
     }
 }

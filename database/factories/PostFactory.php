@@ -1,7 +1,7 @@
 <?php
 
 namespace Database\Factories;
-
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -24,6 +24,7 @@ class PostFactory extends Factory
                     'title' => fake()->sentence(),
                     'content' => fake()->paragraph(),
                     'description' => fake()->paragraph(),
+                    'image' => fake()->randomelement(['images/image1.jpeg','images/image2.png','images/image5.jpeg']),
                 
             ];
             //

@@ -10,12 +10,9 @@ integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6
 </head>
 <body>
 <x-app-layout>
-    <nav class="navbar navbar-expand-lg navbar-light bg-warning">
-        <div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid ">
           <a class="navbar-brand h1" href={{ route('users.index') }}>USERS</a>
-          <div class="justify-end ">
-            
-          </div>
         </div>
       </nav>
       <div class="container mt-5">

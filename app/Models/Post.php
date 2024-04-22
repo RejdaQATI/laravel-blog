@@ -12,7 +12,8 @@ class Post extends Model
     protected $fillable = [
     'title',
     'description',
-    'content',    
+    'content',
+    'image',    
     ];
 
     public function author() {
@@ -22,6 +23,11 @@ class Post extends Model
     public function categories()
     {
         return $this->belongsToMany(Category::class);
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'title';
     }
 }
 
