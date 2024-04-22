@@ -16,28 +16,41 @@ integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6
       margin-bottom: 3rem;
       box-shadow: 10px;
     }
-
+    .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            grid-gap: 0.5rem;
+            justify-items: center;
+        }
 
   </style>
-</head>
+  
+  @include('layouts.front.header')
+
+
+
 
 <body>
     <div class="mt-8 p-4 bg-white rounded-lg shadow-md">
         <form action="{{ route('welcome.pages') }}" method="GET" id="categoryFilter">
-            <h2 class="text-lg font-semibold text-gray-800 mb-4">Filtrer par catégorie</h2>
-
-                <div class="flex flex-row flex-wrap">
-                    @foreach($categories as $category)
-                        <div class="flex-none mb-2 mr-4">
-                            <input type="checkbox" name="categories[]" value="{{ $category->id }}" id="category{{ $category->id }}" class="mr-2">
-                            <label for="category{{ $category->id }}" class="text-gray-700">{{ $category->title }}</label>
-                        </div>
-                    @endforeach
-                </div>
-        
-            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 mt-4">Filtrer</button>
+            <h2 class="text-xs text-gray-400 mb-2">Welcome to my blog</h2>
+    
+    
+            <div class="category-grid">
+                @foreach($categories as $category)
+                    <div class="inline-flex items-center max-w-md bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl m-3">
+                        <input type="checkbox" name="categories[]" value="{{ $category->id }}" id="category{{ $category->id }}" class="mr-2">
+                        <label for="category{{ $category->id }}" class="text-gray-700">{{ $category->title }}</label>
+                    </div>
+                @endforeach
+                <button type="submit" class="bg-blue-500 text-black px-4 py-2 rounded-md hover:bg-blue-600 mt-1">Filtrer</button>
+            </div>
+    
         </form>
     </div>
+    
+    
+    
     
     
 <div class="container mt-5 justify-content-center">
@@ -73,24 +86,26 @@ integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6
                       <a href="{{ route('posts.show', $post->title) }}" class="btn btn-info btn-sm">Show</a>
                     </div>
                   
-                  </div>
+                    </div>
                 </div>
-              </div>
+                </div>
             </div>
-          @endforeach
+            @endforeach
         </div>
-      @endforeach
+        @endforeach
     </div>
-  </div>
+    </div>
 
 
 
 
 @include('layouts.front.footer')
 
-<div class="flex justify-between mt-6 px-4">
-<a href="legals" class="text-blue-500">Mentions légales</a>
-<a href="about" class="text-blue-500">À Propos</a>
-</div>
+<div style="display: flex; justify-content: center;">
+    <div style="display: flex; justify-content: space-between; margin-top: 6px; padding: 4px ;">
+      <a href="legals" style="color: #0077cc; text-decoration: none;">Mentions légales</a>
+      <span style="margin-right: 10px;"></span> <!-- Creating a gap -->
+      <a href="about" style="color: #0077cc; text-decoration: none;">À Propos</a>
+    </div>
 </body>
 </html>
