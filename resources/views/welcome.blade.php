@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,12 +22,11 @@ integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6
             justify-items: center;
         }
 
+        
+
   </style>
   
   @include('layouts.front.header')
-
-
-
 
 <body>
     <div class="mt-8 p-4 bg-white rounded-lg shadow-md">
@@ -97,14 +95,14 @@ integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6
     </div>
 
 
-
+    
 
 @include('layouts.front.footer')
 
 <div style="display: flex; justify-content: center;">
     <div style="display: flex; justify-content: space-between; margin-top: 6px; padding: 4px ;">
       <a href="legals" style="color: #0077cc; text-decoration: none;">Mentions légales</a>
-      <span style="margin-right: 10px;"></span> <!-- Creating a gap -->
+      <span style="margin-right: 10px;"></span> 
       <a href="about" style="color: #0077cc; text-decoration: none;">À Propos</a>
     </div>
 </body>

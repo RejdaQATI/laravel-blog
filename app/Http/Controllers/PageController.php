@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
@@ -10,22 +11,18 @@ use Illuminate\View\View;
 use App\Models\Post;
 use App\Models\Category;
 
-
 class PageController extends Controller
 {
-
-
-
     public function legals(): View
     {
-        $items = array (
-            "test",
+        $items = [
+            "content"=>"<p>Lorem Ipsum</p>",
             "test2",
-        );
+        ];
         return view('legals', [
             'title' => 'legals',
             'content' => "<p>Lorem Ipsum</p>",
-            'items'=>$items
+            'items' => $items
         ]);
     }
 
@@ -37,26 +34,20 @@ class PageController extends Controller
         ]);
     }
 
-
-
-
-
     public function welcome(Request $request): View
-{
-    $categories = Category::all();
-    $categoryIds = $request->categories; 
+    {
+        $categories = Category::all();
+        $categoryIds = $request->categories; 
 
-    if (!empty($categoryIds)) {
         $postsQuery = Post::query();
-        $postsQuery->whereHas('categories', function ($query) use ($categoryIds) {
-            $query->whereIn('categories.id', $categoryIds); 
-        });
-        $posts = $postsQuery->get();
-    } else {
-        $posts = Post::all();
+        if (!empty($categoryIds)) {
+            $postsQuery->whereHas('categories', function ($query) use ($categoryIds) {
+                $query->whereIn('categories.id', $categoryIds); 
+            });
+        }
+        
+        $posts = $postsQuery->paginate(8); 
+        
+        return view('welcome', ['posts' => $posts, 'categories' => $categories]); 
     }
-
-    return view('welcome', ['posts' => $posts, 'categories' => $categories]); 
-}
-
 }

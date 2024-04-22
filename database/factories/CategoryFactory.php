@@ -20,7 +20,8 @@ class CategoryFactory extends Factory
 
             'title' => fake()->word(),
             'description' => fake()->sentence(),
-            'image' => fake()->randomelement(['storage/images/logo1.png','storage/images/logo2.png','storage/images/logo2.png']),
+            'image' => fake()->randomelement(['storage/images/logo1.png','storage/images/logo2.png','storage/images/logo3.jpeg']),
+           
         ];
     }
 }

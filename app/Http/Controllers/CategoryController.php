@@ -25,50 +25,67 @@ class CategoryController extends Controller
         return view('categoriescreate');
     }
     
+   public function store(Request $request)
+{
+    $validatedData = $request->validate([
+        'title' => 'required|string',
+        'description' => 'nullable|string',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', 
+    ]);
 
-    public function store(Request $request)
-    {
+    $category = new Category();
 
-        $validatedData = $request->validate([
-            'title' => 'required|string',
-            'description' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', 
-        ]);
-
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '.' . $image->extension();
-            $image->move(public_path('images'), $imageName);
-
-            $validatedData['image'] = '/images/' . $imageName;
-        }
-
-
-        $category = Category::create($validatedData);
-        return redirect()->route('categories.index')
-        ->with('success', 'Category updated successfully.');
-    
-
-
+    $category->fill($validatedData);
+    if ($request->hasFile('image')) {
+        $imageName = $request->file('image')->getClientOriginalName();
+        $imagePath = request('image')->storeAs('', $imageName, 'public');
+        $category->image = $imagePath;
+        $category->save();
     }
+    
+    return redirect()->route('categories.index')->with('success', 'Category created successfully.');
+}
+
+    
+    
     public function edit($id)
     {
         $category = Category::find($id);
         return view('categoriesedit', [
             "title" => "Edit Post",
             "category" => $category
+            
         ]);
+        
     }
+
     public function update(Request $request, $id)
     {
         $request->validate([
             'title' => 'required|max:255',
         ]);
+    
         $category = Category::find($id);
         $category->update($request->all());
+    
+        if ($request->hasFile('image')) {
+            // Get the file name
+            $imageName = time() . '.' . $request->file('image')->getClientOriginalExtension();
+            // Move the uploaded file to the public/images directory
+            $request->file('image')->move(public_path('images'), $imageName);
+            // Update the category's image path
+            $category->image = 'images/' . $imageName;
+        }
+    
+        $category->save();
+    
         return redirect()->route('categories.index')
             ->with('success', 'Category updated successfully.');
     }
+    
+    
+    
+
 
     public function destroy($id)
     {
@@ -77,7 +94,21 @@ class CategoryController extends Controller
         return redirect()->route('categories.index')
             ->with('success', 'Category deleted successfully');
     }
-}
+    private function storeImage(Category $category, Request $request)
+    {
+        if ($request->hasFile('image')) {
+     
+                $imagePath = request('image')->store('images', 'public');
+                $category->image = $imagePath;
+                $category->save();
+            }
+        }
+    }
+    
+    
+        
+    
 
 
 
+    

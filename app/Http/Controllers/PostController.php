@@ -18,10 +18,10 @@ class PostController extends Controller
     public function index(Request $request): View
     {
         if (Auth::user()->isAdmin()) {
-            $posts = Post::all();
+            $posts = Post::paginate(6);
         } else {
             $user = User::find(Auth::id());
-            $posts = $user->posts()->get();
+            $posts = $user->posts()->paginate(6);
         }
     
         return view('allposts', compact('posts'));

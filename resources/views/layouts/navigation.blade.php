@@ -16,13 +16,12 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-                @if (Auth::user()->role != "admin")
 
                     <x-nav-link :href="route('posts.index')" :active="request()->routeIs('posts.index')">
-                        {{ __('All Post') }}
+                        {{ __('All Posts') }}
                     </x-nav-link>
 
-                @endif
+ 
 
                 
 

@@ -1,34 +1,66 @@
+<style>
+    .btn {
+        display: inline-block;
+        padding: 8px 16px;
+        background-color: hsl(250, 100%, 64%);
+        color: #FFFFFF;
+        border: none;
+        border-radius: 4px;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+        margin: 0 5px; 
+    }
+
+    .btn:hover {
+        background-color: hsl(234, 100%, 64%);
+    }
+
+    .nav-stripe {
+        background-color: #f8f9fa; 
+        padding: 10px 0; 
+    }
+</style>
 
 <header class="grid grid-cols-2 items-center gap-2 py-10 lg:grid-cols-3">
-    <div class="flex lg:justify-center lg:col-start-2">
-        
-    </div>
-    @if (Route::has('login'))
-        <nav class="-mx-3 flex flex-1 justify-end">
-            @auth
-                <a
-                    href="{{ url('/dashboard') }}"
-                    class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
-                >
-                    Dashboard
-                </a>
-            @else
-                <a
-                    href="{{ route('login') }}"
-                    class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
-                >
-                    Log in
-                </a>
+    <div class="flex lg:justify-center lg:col-start-2"></div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light nav-stripe">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    @if (Route::has('login'))
+                        @auth
+                            <li class="nav-item">
+                                <a
+                                    href="{{ url('/dashboard') }}"
+                                    class="btn nav-link"
+                                >
+                                    Dashboard
+                                </a>
+                            </li>
+                        @else
+                            <li class="nav-item">
+                                <a
+                                    href="{{ route('login') }}"
+                                    class="btn nav-link"
+                                >
+                                    Log in
+                                </a>
+                            </li>
 
-                @if (Route::has('register'))
-                    <a
-                        href="{{ route('register') }}"
-                        class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
-                    >
-                        Register
-                    </a>
-                @endif
-            @endauth
-        </nav>
-    @endif
+                            @if (Route::has('register'))
+                                <li class="nav-item">
+                                    <a
+                                        href="{{ route('register') }}"
+                                        class="btn nav-link"
+                                    >
+                                        Register
+                                    </a>
+                                </li>
+                            @endif
+                        @endauth
+                    @endif
+                </ul>
+            </div>
+        </div>
+    </nav>
 </header>
